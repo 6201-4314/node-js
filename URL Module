@@ -1,0 +1,21 @@
+var http=require('http');
+var URL=require('url');
+
+var server=http.createServer(function (req,res){
+
+    var myURL= "http://nazmulhossain.com/blog.html?year=2022";
+
+    var myObject= URL.parse(myURL,true);
+
+    var myHost=myObject.host;
+    var myURLpathname=myObject.pathname;
+    var myURLsearch=myObject.search;
+
+    res.writeHead(200,{'Content-Type':'text/html'})
+    res.write(myHost+myURLpathname+myURLsearch);
+    res.end();
+
+});
+
+server.listen(5050);
+console.log("Server Run succes");
