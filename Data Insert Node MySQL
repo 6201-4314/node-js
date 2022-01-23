@@ -1,0 +1,27 @@
+var mysql = require('mysql');
+
+var connectiondatabase={host: "localhost", user: "nazmul", password: "admin", database:"school"}
+var con = mysql.createConnection(connectiondatabase);
+
+con.connect(function(err) {
+    if (err) {
+        console.log("database connection fail");
+    }else {
+        console.log("database connecton success");
+        InsertData(con);
+    }
+});
+
+function InsertData(){
+    let SQLQuery="INSERT INTO `students_list`(`name`, `roll`, `class`, `phone`, `city`) VALUES ('Nazmul','01','diploma','01636852859','dhaka')"
+    con.query(SQLQuery,function (error){
+        if (error){
+            console.log("Data insert fail")
+        }
+        else{
+            console.log("Data insert success")
+        }
+
+    })
+
+}
