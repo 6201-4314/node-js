@@ -1,0 +1,11 @@
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb+srv://nazmuldemo:hbKu8UaLHAC@cluster0.loeqi.mongodb.net?retryWrites=true&w=majority";
+
+MongoClient.connect(url, function(error,MymongoClinet) {
+    if (error) {
+        console.log("Database connection fail!");
+    }
+    else {
+        console.log("Database cannection success!");
+    }
+});
