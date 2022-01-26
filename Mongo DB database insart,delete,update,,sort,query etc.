@@ -1,0 +1,159 @@
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb+srv://nazmuldemo:hbKu8UaLHAC@cluster0.loeqi.mongodb.net?retryWrites=true&w=majority";
+
+ MongoClient.connect(url, function(error,MymongoClinet) {
+    if (error) {
+        console.log("Database connection fail!");
+    }
+    else {
+        console.log("Database cannection success!");
+        //createCollection(MymongoClinet);
+        deleteCollection(MymongoClinet)
+
+       //InsertData(MymongoClinet);
+        //deleteDataone(MymongoClinet);
+       // deleteData(MymongoClinet);
+        //findone(MymongoClinet);
+       // findAll(MymongoClinet);
+        //findAllprojection(MymongoClinet);
+        //findAllQuery(MymongoClinet);
+        //findAllLimit(MymongoClinet);
+        //findAllSort(MymongoClinet);
+        //upadteOneData(MymongoClinet)
+    }
+});
+
+ function createCollection(MymongoClinet){
+     var myDatabase=MymongoClinet.db("school")
+     myDatabase.createCollection("teacher",function (error,result){
+         console.log(result);
+     })
+ }
+
+
+function deleteCollection(MymongoClinet){
+    var myDatabase=MymongoClinet.db("school")
+    myDatabase.dropCollection("teacher",function (error,result){
+        console.log(result);
+    })
+}
+
+
+function InsertData(MymongoClinet){
+    var myDatabase=MymongoClinet.db("school");
+    var myCollection=myDatabase.collection("students");
+
+    var myData={name:"nazmul",roll:"04",phone:"01122222",city:"Dhaka"};
+    myCollection.insertOne(myData,function (error) {
+        if (error){
+            console.log("Data insart fail");
+        }
+        else{
+            console.log("data insert success");
+        }
+    });
+}
+function deleteDataone(MymongoClinet){
+    var myDatabase=MongoClient.db("school");
+    var myCollection=myDatabase.collection("students");
+    var mydataitem={roll:"04"};
+
+    myCollection.deleteOne(mydataitem,function (error) {
+        if (error){
+            console.log("Data delete fail");
+        }
+        else{
+            console.log("data delete success");
+        }
+    })
+}
+
+function deleteData(MymongoClinet){
+    var myDatabase=MymongoClinet.db("school");
+    var myCollection=myDatabase.collection("students");
+
+    myCollection.deleteMany(function (error,resutlobj) {
+        if (error){
+            console.log("Data delete fail");
+        }
+        else{
+            console.log(resutlobj);
+        }
+    })
+}
+
+function findone(MymongoClinet){
+    var myDatabase=MymongoClinet.db("school");
+    var myCollection=myDatabase.collection("students");
+    myCollection.findOne({roll:"03"},function (error,result) {
+        console.log(result);
+    });
+}
+function findAll(MymongoClinet){
+    var myDatabase=MymongoClinet.db("school");
+    var myCollection=myDatabase.collection("students");
+    myCollection.find().toArray(function (error,result) {
+        console.log(result);
+    });
+}
+
+
+function findAllprojection(MymongoClinet){
+    var myDatabase=MymongoClinet.db("school");
+    var myCollection=myDatabase.collection("students");
+    var Item={}
+    var myProjection={projection:{roll:1}};
+
+    myCollection.find(Item,myProjection).toArray(function (error,result) {
+        console.log(result);
+    });
+}
+
+function findAllQuery(MymongoClinet){
+    var myDatabase=MymongoClinet.db("school");
+    var myCollection=myDatabase.collection("students");
+    var myQuery={name:"nazmul"};
+
+    myCollection.find(myQuery).toArray(function (error,result) {
+        console.log(result);
+    });
+}
+
+function findAllLimit(MymongoClinet){
+    var myDatabase=MymongoClinet.db("school");
+    var myCollection=myDatabase.collection("students");
+
+    myCollection.find().limit(3).toArray(function (error,result) {
+        console.log(result);
+    });
+}
+
+function findAllSort(MymongoClinet){
+    var myDatabase=MymongoClinet.db("school");
+    var myCollection=myDatabase.collection("students");
+    var Sortdata={roll:-1}         //value -1 or 1
+
+    myCollection.find().sort(Sortdata).toArray(function (error,result) {
+        console.log(result);
+    });
+}
+
+
+function upadteOneData(MymongoClinet){
+    var mydatabse=MymongoClinet.db("school");
+    var mycollection=mydatabse.collection("students")
+    var myquery={roll:"04"}
+    var updatedata={ $set: {name: "nazmul hossain", address: "Canyon 123" } };
+
+    mycollection.updateOne(myquery,updatedata,function (error,result) {
+        if (error){
+            console.log("Data update fail");
+        }
+        else{
+            console.log(result);
+        }
+
+    })
+
+
+}
